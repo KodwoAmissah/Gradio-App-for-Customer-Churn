@@ -74,7 +74,7 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
             TotalCharges = gr.Number(label="How Much Is Your Total Charges?")
 
     # Define Gradio outputs
-    output = gr.HTML("Awaiting Submission")
+    output = gr.HTML("Awaiting Prediction")
 
     # Create a button
     button = gr.Button("Predict")
