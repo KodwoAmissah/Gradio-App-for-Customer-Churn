@@ -48,7 +48,10 @@ def predict_churn(SeniorCitizen, Partner, Dependents, tenure, InternetService,
 
 # Define Gradio components
 with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as block:
-    gr.Markdown("👋 Welcome to Team Cape Cod's Churn Prediction App")
+    gr.Markdown(
+        """# 👋 Welcome to Team Cape Cod's Churn Prediction App
+
+                This App predicts whether a customer will churn or not""")
     
     with gr.Row():
         with gr.Column():
@@ -70,8 +73,8 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
             Contract = gr.Radio(["Month-to-month", "One year", "Two year"], label="What Is Your Contract Type?")
             PaperlessBilling = gr.Radio(["Yes", "No"], label="Do You Use Paperless Billing?")
             PaymentMethod = gr.Dropdown(["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"], label="What Payment Method Do You Use?")
-            MonthlyCharges = gr.Number(label="What is your Monthly Charges?")
-            TotalCharges = gr.Number(label="How Much Is Your Total Charges?")
+            MonthlyCharges = gr.Number(label="What is your Monthly Charge?")
+            TotalCharges = gr.Number(label="What are your Total Charges?")
 
     # Define Gradio outputs
     output = gr.HTML("Awaiting Prediction")
@@ -86,5 +89,23 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
                          StreamingTV, StreamingMovies, Contract, PaperlessBilling,
                          PaymentMethod, MonthlyCharges, TotalCharges],
                  outputs=output)
+    
+    #create exmaples
+    gr.Markdown("Input Examples")
 
-block.launch()
+    gr.Examples([['No', 'No', 'No', '12', 'Fiber optic', 'No', 'No', 'No', 'No', 'Yes', 'No', 'Month-to-month', 'Yes', 'Electronic check', '84.45', '1059.55'],
+                 
+                      ['No', 'No', 'No', '9', 'No', 'No internet service', 'No internet service', 'No internet service', 'No internet service', 'No internet service', 'No internet service', 'Month-to-month', 'No', 'Mailed check', '20.40', '181.80'],
+                      
+                      ['No', 'No', 'No', '27', 'DSL', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'One year', 'No', 'Electronic check', '81.70', '2212.55']],
+                      
+                      inputs=[SeniorCitizen, Partner, Dependents, tenure, InternetService,
+                         OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport,
+                         StreamingTV, StreamingMovies, Contract, PaperlessBilling,
+                         PaymentMethod, MonthlyCharges, TotalCharges])
+
+#start gradio app
+block.launch(
+    auth=("azubiafrica", "teamcapecod"),
+    auth_message="Enter the username 'azubiafrica' and password 'teamcapecod' for this demo app"
+)
