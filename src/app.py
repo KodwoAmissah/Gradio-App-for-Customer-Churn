@@ -109,3 +109,4 @@ block.launch(
     auth=("azubiafrica", "teamcapecod"),
     auth_message="Enter the username 'azubiafrica' and password 'teamcapecod' for this demo app"
 )
+
