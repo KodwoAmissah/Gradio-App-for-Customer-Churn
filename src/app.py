@@ -40,9 +40,9 @@ def predict_churn(SeniorCitizen, Partner, Dependents, tenure, InternetService,
     
     # Determine the churn prediction
     if prediction[0] == 0:
-        churn_result = '<span style="color: limegreen;">Customer will not churn</span>'
+        churn_result = '<span style="color: limegreen;font-size:20px;">Customer will not churn</span>'
     else:
-        churn_result = '<span style="color: red;">Customer will churn</span>'
+        churn_result = '<span style="color: red;font-size:20px;">Customer will churn</span>'
     
     return churn_result
 
@@ -75,7 +75,20 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
             PaymentMethod = gr.Dropdown(["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"], label="What Payment Method Do You Use?")
             MonthlyCharges = gr.Number(label="What is your Monthly Charge?")
             TotalCharges = gr.Number(label="What are your Total Charges?")
+            
 
+            #create a variable that clear button will clear
+            input_components = [SeniorCitizen, Partner, Dependents, tenure,
+                                InternetService, OnlineSecurity, OnlineBackup, DeviceProtection,
+                                TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling,
+                                PaymentMethod, MonthlyCharges, TotalCharges]
+            
+             #Create a button user will click to clear inputs selected
+            gr.ClearButton(input_components)           
+    
+    #create markdown for ouput
+    text = gr.Markdown("## Churn Status")
+    
     # Define Gradio outputs
     output = gr.HTML("Awaiting Prediction")
 
@@ -83,15 +96,10 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
     button = gr.Button("Predict")
 
     # Create Gradio interface
-    button.click(fn=predict_churn,
-                 inputs=[SeniorCitizen, Partner, Dependents, tenure, InternetService,
-                         OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport,
-                         StreamingTV, StreamingMovies, Contract, PaperlessBilling,
-                         PaymentMethod, MonthlyCharges, TotalCharges],
-                 outputs=output)
+    button.click(fn=predict_churn,inputs=input_components, outputs=output)
     
-    #create exmaples
-    gr.Markdown("Input Examples")
+    #create an example dataframe
+    gr.Markdown("## Input Examples")
 
     gr.Examples([['No', 'No', 'No', '12', 'Fiber optic', 'No', 'No', 'No', 'No', 'Yes', 'No', 'Month-to-month', 'Yes', 'Electronic check', '84.45', '1059.55'],
                  
@@ -99,10 +107,7 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
                       
                       ['No', 'No', 'No', '27', 'DSL', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'One year', 'No', 'Electronic check', '81.70', '2212.55']],
                       
-                      inputs=[SeniorCitizen, Partner, Dependents, tenure, InternetService,
-                         OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport,
-                         StreamingTV, StreamingMovies, Contract, PaperlessBilling,
-                         PaymentMethod, MonthlyCharges, TotalCharges])
+                      inputs=input_components)
 
 #start gradio app
 block.launch(
