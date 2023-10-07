@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load your churn prediction model
-model = joblib.load('Model\\best_model.pkl')
+model = joblib.load('Model/best_model.pkl')
 
 # Create a Gradio interface
 def predict_churn(SeniorCitizen, Partner, Dependents, tenure, InternetService,
