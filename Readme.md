@@ -28,7 +28,11 @@ For manual installation, you need to have [`Python3`](https://www.python.org/) o
 
           src\app.py
 
-## App In Use 😃        
+## App In Use 😃   
+
+
+
+https://github.com/KodwoAmissah/Gradio-App-for-Customer-Churn/assets/137364174/bdd5653b-6ff8-4744-97ee-e9144d291bd8
 
 
 
