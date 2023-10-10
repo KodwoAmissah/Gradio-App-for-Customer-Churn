@@ -10,6 +10,15 @@ def predict_churn(SeniorCitizen, Partner, Dependents, tenure, InternetService,
                   OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport,
                   StreamingTV, StreamingMovies, Contract, PaperlessBilling,
                   PaymentMethod, MonthlyCharges, TotalCharges):
+    # Check if any of the inputs are missing
+    if any([SeniorCitizen is None, Partner is None, Dependents is None, tenure is None,
+            InternetService is None, OnlineSecurity is None, OnlineBackup is None,
+            DeviceProtection is None, TechSupport is None, StreamingTV is None,
+            StreamingMovies is None, Contract is None, PaperlessBilling is None,
+            PaymentMethod is None, MonthlyCharges is None, TotalCharges is None]):
+        error_message = '<span style="color: red;font-size:25px;">Please fill in all the input fields.</span>'
+        return error_message
+    
     
     # Create a dictionary with input features
     input_data = {
@@ -58,7 +67,7 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
             SeniorCitizen = gr.Radio(["Yes", "No"], label="Are you a Senior Citizen?")
             Partner = gr.Radio(["Yes", "No"], label="Do you have a partner?")
             Dependents = gr.Radio(["Yes", "No"], label="Do you have dependents?")
-            tenure = gr.Number(label="Tenure (months): How long have you been at the company")
+            tenure = gr.Number(label="Tenure (months): How long have you been at the company",minimum=0)
             InternetService = gr.Radio(["DSL", "Fiber optic", "No"], label="What Internet Service Do You Use?")
             OnlineSecurity = gr.Radio(["Yes", "No", "No internet service"], label="Do You Have Online Security?")
             
@@ -73,8 +82,8 @@ with gr.Blocks(theme=gr.themes.Base(primary_hue="stone",neutral_hue="stone")) as
             Contract = gr.Radio(["Month-to-month", "One year", "Two year"], label="What Is Your Contract Type?")
             PaperlessBilling = gr.Radio(["Yes", "No"], label="Do You Use Paperless Billing?")
             PaymentMethod = gr.Dropdown(["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"], label="What Payment Method Do You Use?")
-            MonthlyCharges = gr.Number(label="What is your Monthly Charge?")
-            TotalCharges = gr.Number(label="What are your Total Charges?")
+            MonthlyCharges = gr.Number(label="What is your Monthly Charge?",minimum=0)
+            TotalCharges = gr.Number(label="What are your Total Charges?",minimum=0)
             
 
             #create a variable that clear button will clear
